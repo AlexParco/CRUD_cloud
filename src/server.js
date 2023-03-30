@@ -43,8 +43,6 @@ app.get('/test', (req, res) => {
   res.send("hola mundo")
 })
 
-app.listen(4040, () => {
+app.listen(9002, () => {
   console.log(`SERVER RUNNING IN http://localhost:${PORT}`)
 })
-
-module.exports = app;
