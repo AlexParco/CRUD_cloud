@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParse = require('body-parser')
 const Pool = require('pg').Pool
 const app = express()
-const PORT = 4040
+const PORT = process.env.PORT || 5000
 
 app.use(bodyParse.json())
 app.use(bodyParse.urlencoded({
