@@ -38,7 +38,9 @@ app.get('/', (req, res) => {
     root: __dirname,
   })
 })
+
 app.get('/agenda', controller.getAllAgendas)
+
 app.get('/test', (req, res) => {
   res.send("hola mundo")
 })
