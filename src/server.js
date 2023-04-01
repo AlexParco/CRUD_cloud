@@ -2,12 +2,14 @@ const express = require('express')
 const bodyParse = require('body-parser')
 const Pool = require('pg').Pool
 const app = express()
+const cors = require('cors')
 const PORT = process.env.PORT || 5000
 
 app.use(bodyParse.json())
 app.use(bodyParse.urlencoded({
   extended: true
 }))
+app.use(cors())
 
 const conn = new Pool({
   user: 'postgres',
