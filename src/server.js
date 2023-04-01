@@ -17,7 +17,6 @@ const conn = new Pool({
   port: 5432,
 })
 
-
 class AgendaController{
 
     getAllAgendas = (req, res) => {
@@ -25,8 +24,52 @@ class AgendaController{
         if(err){
           return err
         }
-        console.log(result)
         res.status(200).json(result.rows)
+      })
+    }
+
+    getAgenda = (req, res) => {
+      const id = req.params['id']
+      conn.query('SELECT * FROM agenda WHERE id=$1',[id], (err, result) => {
+        if(err){
+          return err
+        }
+        res.status(200).json(result.rows)
+      })
+    }
+
+    postAgenda = (req, res) => {
+      const {name, number, description, fecha} = req.body
+      conn.query('INSERT INTO agenda (name, number, description, fecha) values ($1, $2, $3, $4)',
+       [name, number, description, fecha],
+       (err, result) => {
+        if(err){
+          return err
+        }
+        res.status(200).json({"message": "success"})
+      })
+    }
+
+    putAgenda = (req, res) => {
+      const id = req.params['id']
+      const {name, number, description, fecha} = req.body
+      conn.query('UPDATE agenda set name=$1, number=$2, description=$3, fecha=$4 WHERE id = $5',
+       [name, number, description, fecha, id],
+       (err, result) => {
+        if(err){
+          return err
+        }
+        res.status(200).json({"message": "success"})
+      })
+    }
+
+    deleteAgenda = (req, res) => {
+      const id = req.params['id']
+      conn.query('DELETE FROM agenda WHERE id = $1', [id], (err, result) => {
+        if(err){
+          return err
+        }
+        res.status(200).json({"message": "success"})
       })
     }
 }
@@ -40,11 +83,16 @@ app.get('/', (req, res) => {
 })
 
 app.get('/agenda', controller.getAllAgendas)
+app.get('/agenda/:id', controller.getAgenda)
+app.post('/agenda', controller.postAgenda)
+app.put('/agenda', controller.putAgenda)
+app.delete('/agenda', controller.deleteAgenda)
+
 
 app.get('/test', (req, res) => {
   res.send("hola mundo")
 })
 
-app.listen(9002, () => {
+app.listen(PORT, () => {
   console.log(`SERVER RUNNING IN http://localhost:${PORT}`)
 })
