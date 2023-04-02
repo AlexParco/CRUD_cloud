@@ -87,8 +87,8 @@ app.get('/', (req, res) => {
 app.get('/agenda', controller.getAllAgendas)
 app.get('/agenda/:id', controller.getAgenda)
 app.post('/agenda', controller.postAgenda)
-app.put('/agenda', controller.putAgenda)
-app.delete('/agenda', controller.deleteAgenda)
+app.put('/agenda/:id', controller.putAgenda)
+app.delete('/agenda/:id', controller.deleteAgenda)
 
 
 app.get('/test', (req, res) => {
